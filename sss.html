@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <title>শুভ জন্মদিন</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Noto Serif Bengali', serif;
+      color: #fff;
+      text-align: center;
+      background: url('https://i.postimg.cc/pLp25L5V/IMG-20250509-234554-257.jpg') no-repeat center center fixed;
+      background-size: cover;
+    }
+
+    .container {
+      max-width: 650px;
+      margin: 80px auto;
+      padding: 30px;
+      background: rgba(0, 0, 0, 0.65);
+      border-radius: 20px;
+    }
+
+    input, button {
+      padding: 12px;
+      margin: 10px;
+      width: 80%;
+      max-width: 300px;
+      border-radius: 10px;
+      border: none;
+      font-family: 'Noto Serif Bengali', serif;
+    }
+
+    button {
+      background-color: #ff6f91;
+      color: white;
+      font-size: 18px;
+      cursor: pointer;
+    }
+
+    #output {
+      margin-top: 25px;
+      font-size: 18px;
+      white-space: pre-line;
+      min-height: 150px;
+      color: #ffdde1;
+    }
+
+    #countdown {
+      font-size: 16px;
+      margin-top: 15px;
+      color: #ccc;
+    }
+
+    .footer {
+      margin-top: 40px;
+      font-size: 14px;
+      color: #eee;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 99;
+      left: 0; top: 0;
+      width: 100%; height: 100%;
+      background-color: rgba(0,0,0,0.6);
+    }
+
+    .modal-content {
+      background-color: #fff;
+      color: #111;
+      margin: 15% auto;
+      padding: 20px;
+      width: 80%;
+      max-width: 400px;
+      border-radius: 15px;
+    }
+
+    .close {
+      color: #888;
+      font-size: 20px;
+      cursor: pointer;
+      float: right;
+    }
+
+    .close:hover {
+      color: #ff6f91;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Gaan -->
+  <audio id="bgSong" autoplay loop hidden>
+    <source src="https://docs.google.com/uc?export=download&id=1AJBSkkctQajrVgvMFxdrbZ3lx_gQ-BZX" type="audio/mpeg">
+  </audio>
+
+  <!-- Voice -->
+  <audio id="voiceGreeting">
+    <source src="https://cdn.pixabay.com/download/audio/2021/09/13/audio_7e7b9f3806.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- Main -->
+  <div class="container" id="mainBox">
+    <h2>১/ তোমার প্রিয় রং কী?</h2>
+    <input type="text" id="color" placeholder="প্রিয় রং লিখো"><br>
+
+    <h2>২/ তোমার প্রিয় মানুষের নাম কী?</h2>
+    <input type="text" id="name" placeholder="নাম লিখো"><br>
+
+    <button onclick="submitForm()">জমা দাও</button>
+
+    <div id="output"></div>
+    <div id="countdown"></div>
+  </div>
+
+  <div class="footer">
+    Developed by <a href="https://www.facebook.com/rifu.brother16778" target="_blank">Rifu</a>
+  </div>
+
+  <script>
+    function typeWriter(text, i) {
+      if (i < text.length) {
+        document.getElementById("output").innerHTML = text.substring(0, i + 1);
+        setTimeout(() => typeWriter(text, i + 1), 30);
+      }
+    }
+
+    function showCountdown() {
+      const bday = new Date("June 5, 2025");
+      const now = new Date();
+      const diff = bday - now;
+      const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const m = Math.floor((diff / 60000) % 60);
+      const s = Math.floor((diff / 1000) % 60);
+      document.getElementById("countdown").innerText = `শুভ জন্মদিন আসতে বাকি: ${d} দিন ${h} ঘণ্টা ${m} মিনিট ${s} সেকেন্ড`;
+    }
+
+    function openModal() {
+      document.getElementById('popupModal').style.display = 'block';
+    }
+
+    function closeModal() {
+      document.getElementById('popupModal').style.display = 'none';
+    }
+
+    function submitForm() {
+      const name = document.getElementById("name").value.trim().toLowerCase();
+      const msg = `তোমাকে আগাম শুভ জন্মদিন! 🎂🎉
+তোমার এই বিশেষ দিনটা যদিও এখনো আসেনি, তবুও মনে হলো, একটু আগেই শুভেচ্ছা জানিয়ে রাখি।
+তুমি যেভাবে হাসো, যেভাবে কথা বলো—সবকিছুতেই একটা সুন্দর ছোঁয়া থাকে।
+তোমার আসন্ন জন্মদিনটা হোক ভালোবাসা, আনন্দ আর হাসিতে ভরা।
+তুমি যেভাবে স্বপ্ন দেখো, সেভাবেই যেন সবকিছু বাস্তব হয়ে ধরা দেয়।
+আগাম শুভ জন্মদিন, প্রিয় আলু।`;
+
+      if (["amjad", "amju", "birthday"].includes(name)) {
+        typeWriter(msg, 0);
+        showCountdown();
+        document.getElementById("bgSong").play();
+        document.getElementById("voiceGreeting").play();
+        setTimeout(openModal, 3000);
+      } else {
+        document.getElementById("output").innerText = "আমি তো ভেবেছিলাম, তুমি আমার নামটা নিবে...\nভালোই তো, আমার নামটা নেওয়া হলো না!\nনিলা নাহ্…! 😊💔";
+        document.getElementById("countdown").innerText = '';
+      }
+    }
+
+    document.addEventListener("keypress", function(e) {
+      if (e.key === "Enter") submitForm();
+    });
+
+    setInterval(showCountdown, 1000);
+  </script>
+
+</body>
+</html>
